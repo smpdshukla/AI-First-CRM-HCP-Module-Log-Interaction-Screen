@@ -119,5 +119,4 @@ Visit `http://localhost:5173`
 | `POST` | `/interactions/chat` | Sends a chat message; runs the LangGraph agent; returns updated state + agent reply. |
 | `GET` | `/interactions/{interaction_id}` | Fetches the current state of an interaction (e.g. on page reload). |
 
-## Demo Video
-[link to your YouTube/Drive video once uploaded]
+
