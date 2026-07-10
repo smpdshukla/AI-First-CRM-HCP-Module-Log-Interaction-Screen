@@ -5,3 +5,5 @@ langgraph
 langchain-core
 langchain-groq
 python-dotenv
+sqlalchemy
+psycopg2-binary
