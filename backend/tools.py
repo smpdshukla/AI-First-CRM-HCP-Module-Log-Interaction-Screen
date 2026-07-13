@@ -126,20 +126,27 @@ def add_material_or_sample(
     item_type: str,
     tool_call_id: Annotated[str, InjectedToolCallId],
     state: Annotated[dict, InjectedState],
-    quantity: Optional[int] = None,
+    quantity: Optional[str] = None,
 ) -> Command:
     """Record a material (brochure/PDF) or sample shared with the HCP.
 
     Args:
         name: Name of the material or sample.
         item_type: "material" or "sample".
-        quantity: Number of samples left, if any.
+        quantity: Number of samples left, if any (as a plain number, e.g. "10").
     """
-    new_item = {"name": name, "type": item_type, "quantity": quantity}
+    parsed_quantity = None
+    if quantity is not None:
+        try:
+            parsed_quantity = int(quantity)
+        except (ValueError, TypeError):
+            parsed_quantity = None
+
+    new_item = {"name": name, "type": item_type, "quantity": parsed_quantity}
     existing = state.get("materials_shared", [])
 
     label = "material" if item_type == "material" else "sample"
-    qty_str = f" ({quantity} units)" if quantity else ""
+    qty_str = f" ({parsed_quantity} units)" if parsed_quantity else ""
 
     reply = (
         f"✅ **{label.title()} added successfully!** '{name}'{qty_str} has "
