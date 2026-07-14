@@ -60,6 +60,18 @@ export default function InteractionForm() {
             readOnly
           />
         </div>
+      <button type="button" className="voice-note-btn" style={{ pointerEvents: 'none' }}>
+          ⚡ Summarize from Voice Note (Requires Consent)
+        </button>
+
+        {form.voice_note_summary && (
+          <div className="suggested-followups-inline">
+            <p className="suggested-label">Voice Note Summary:</p>
+            <p style={{ fontSize: '13.5px', color: 'var(--color-text)', margin: 0 }}>
+              {form.voice_note_summary}
+            </p>
+          </div>
+        )}
 
         <div className="field">
           <label htmlFor="topics">Topics Discussed</label>
@@ -70,10 +82,6 @@ export default function InteractionForm() {
             readOnly
           />
         </div>
-
-        <button type="button" className="voice-note-btn" style={{ pointerEvents: 'none' }}>
-          ⚡ Summarize from Voice Note (Requires Consent)
-        </button>
 
         <div className="field">
           <label>Materials Shared / Samples Distributed</label>
