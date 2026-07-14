@@ -8,7 +8,7 @@ from langchain_core.tools.base import InjectedToolCallId
 import os
 
 _llm = ChatGroq(
-    model="llama-3.3-70b-versatile
+    model="llama-3.3-70b-versatile",
     api_key=os.environ.get("GROQ_API_KEY"),
     temperature=0,
     max_tokens=200,
@@ -215,11 +215,26 @@ def summarize_voice_note(
     prompt = (
         "Summarize this field rep's voice note into 2-3 concise sentences "
         "suitable for a CRM 'Topics Discussed' field. Keep only concrete, "
-        "relevant details (drugs, studies, HCP reactions).\n\n"
+        "relevant details (drugs, studies, HCP reactions, upcoming events "
+        "mentioned).\n\n"
+        "Respond with ONLY the summary text itself -- no preamble, no "
+        "introduction like 'Here is a summary', no quotation marks, "
+        "just the 2-3 sentences directly.\n\n"
         f"Transcript: {raw_transcript}"
     )
     response = _llm.invoke(prompt)
     summary = response.content.strip()
+
+    # Safety strip in case the model still adds a preamble despite instructions
+    for prefix in [
+        "here is a summary of the voice note in 2-3 concise sentences:",
+        "here is a summary of the voice note:",
+        "here is a 2-3 sentence summary:",
+        "summary:",
+    ]:
+        if summary.lower().startswith(prefix):
+            summary = summary[len(prefix):].strip()
+            break
 
     reply = (
         f"✅ **Voice note summarized successfully!** Topics Discussed has "
@@ -228,7 +243,7 @@ def summarize_voice_note(
     )
 
     return Command(update={
-        "topics_discussed": summary,
+        "voice_note_summary": summary,
         "last_tool_called": "summarize_voice_note",
         "last_agent_reply": reply,
         "messages": [ToolMessage(content=reply, tool_call_id=tool_call_id)],
