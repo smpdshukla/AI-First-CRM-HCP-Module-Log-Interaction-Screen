@@ -237,11 +237,10 @@ def summarize_voice_note(
             break
 
     reply = (
-        f"✅ **Voice note summarized successfully!** Topics Discussed has "
-        f"been updated with:\n\n\"{summary}\"\n\n"
+        f"✅ **Voice note summarized successfully!** Here's the summary:"
+        f"\n\n\"{summary}\"\n\n"
         f"Does that capture it accurately, or would you like me to adjust it?"
     )
-
     return Command(update={
         "voice_note_summary": summary,
         "last_tool_called": "summarize_voice_note",
