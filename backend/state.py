@@ -38,6 +38,7 @@ class InteractionState(TypedDict):
     outcomes: Annotated[Optional[str], take_last]
     follow_up_actions: Annotated[List[str], take_last]
     suggested_followups: List[str]
+    voice_note_summary: Annotated[Optional[str], take_last]
 
     messages: Annotated[List[BaseMessage], add_messages]
     last_tool_called: Annotated[Optional[str], take_last]
@@ -59,6 +60,7 @@ def new_interaction_state(interaction_id: str) -> InteractionState:
         outcomes=None,
         follow_up_actions=[],
         suggested_followups=[],
+        voice_note_summary=None,
         messages=[],
         last_tool_called=None,
         last_agent_reply=None,
