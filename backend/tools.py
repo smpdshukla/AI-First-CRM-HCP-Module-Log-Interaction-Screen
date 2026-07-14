@@ -8,7 +8,7 @@ from langchain_core.tools.base import InjectedToolCallId
 import os
 
 _llm = ChatGroq(
-    model="llama-3.1-8b-instant",
+    model="llama-3.3-70b-versatile
     api_key=os.environ.get("GROQ_API_KEY"),
     temperature=0,
     max_tokens=200,
