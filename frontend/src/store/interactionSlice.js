@@ -16,6 +16,7 @@ const blankForm = {
   sentiment: null,
   outcomes: '',
   follow_up_actions: [],
+  voice_note_summary: '',
 };
 
 const initialState = {
@@ -41,6 +42,7 @@ function applyBackendState(form, backendState) {
     sentiment: backendState.sentiment ?? form.sentiment,
     outcomes: backendState.outcomes ?? form.outcomes,
     follow_up_actions: backendState.follow_up_actions ?? form.follow_up_actions,
+    voice_note_summary: backendState.voice_note_summary ?? form.voice_note_summary,
   };
 }
 
